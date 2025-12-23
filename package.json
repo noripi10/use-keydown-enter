@@ -1,0 +1,56 @@
+{
+  "name": "use-keydown-enter",
+  "private": false,
+  "version": "1.0.0",
+  "description": "A React hook library that enables focus movement typically achieved by the Tab key to be performed by the Enter key.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run biome && pnpm run typecheck && pnpm build",
+    "format": "pnpm exec biome format --write .",
+    "lint": "pnpm exec biome lint --write .",
+    "biome": "pnpm exec biome check --write ."
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  },
+  "keywords": [
+    "react",
+    "react hook",
+    "keydown",
+    "enter",
+    "tab"
+  ],
+  "author": "noripi10 <support@noripi10.dev> (https://noripi10.dev)",
+  "homepage": "https://github.com/noripi10/use-keydown-enter",
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.10",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
