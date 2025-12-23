@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run biome && pnpm run typecheck && pnpm build",
+    "prepublishOnly": "pnpm biome && pnpm typecheck && pnpm build",
     "format": "pnpm exec biome format --write .",
     "lint": "pnpm exec biome lint --write .",
     "biome": "pnpm exec biome check --write ."
