@@ -1,7 +1,7 @@
 {
   "name": "use-keydown-enter",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A React hook library that enables focus movement typically achieved by the Tab key to be performed by the Enter key.",
   "type": "module",
   "main": "./dist/index.js",
