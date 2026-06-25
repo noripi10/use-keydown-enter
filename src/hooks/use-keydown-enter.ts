@@ -56,9 +56,10 @@ export const useKeydownEnter = <T extends HTMLElement>({ isEnable }: UseKeydownE
     (userProps: React.HTMLAttributes<HTMLElement> & { index: number; ref?: React.Ref<HTMLElement> }) => {
       const { index, ref: userRef, onKeyDown: userOnKeyDown, ...rest } = userProps ?? {};
 
-      if (!elements.current.has(index)) {
-        elements.current.set(index, createRef<T>());
+      if (elements.current.has(index)) {
+        elements.current.delete(index);
       }
+      elements.current.set(index, createRef<T>());
       const internalRef = elements.current.get(index);
 
       return {
