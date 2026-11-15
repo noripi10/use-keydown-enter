@@ -33,16 +33,11 @@ export type UseKeydownEnterProps = {
 export type GetKyedownProps<T extends HTMLElement> = (
   userProps: React.HTMLAttributes<T> & {
     index: number;
-    ref?: React.Ref<T> | undefined;
+    ref?: React.Ref<T>;
   }
 ) => React.HTMLAttributes<T> & {
-  ref: (
-    instance: T | null
-  ) =>
-    | void
-    | (() => void | undefined)
-    | React.DO_NOT_USE_OR_YOU_WILL_BE_FIRED_CALLBACK_REF_RETURN_VALUES[keyof React.DO_NOT_USE_OR_YOU_WILL_BE_FIRED_CALLBACK_REF_RETURN_VALUES];
-  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
+  ref: React.RefCallback<T>;
+  onKeyDown: React.KeyboardEventHandler<T>; //(e: React.KeyboardEvent<T>) => void;
 };
 
 export type UseKeydownEnter<T extends HTMLElement> = {
@@ -52,20 +47,21 @@ export type UseKeydownEnter<T extends HTMLElement> = {
 export const useKeydownEnter = <T extends HTMLElement>({ isEnable }: UseKeydownEnterProps): UseKeydownEnter<T> => {
   const elements: React.RefObject<Map<number, React.RefObject<T | null>>> = useRef(new Map());
 
-  const getKeydownProps = React.useCallback(
-    (userProps: React.HTMLAttributes<HTMLElement> & { index: number; ref?: React.Ref<HTMLElement> }) => {
-      const { index, ref: userRef, onKeyDown: userOnKeyDown, ...rest } = userProps ?? {};
+  const getKeydownProps = React.useCallback<GetKyedownProps<T>>(
+    (userProps) => {
+      const { index, ref: userRef, onKeyDown: userOnKeyDown, ...rest } = userProps;
 
       if (elements.current.has(index)) {
+        console.warn(`[useKeydownEnter] elements index:${index} duplicate.`);
         elements.current.delete(index);
       }
-      elements.current.set(index, createRef<T>());
-      const internalRef = elements.current.get(index);
+      const internalRef = createRef<T>();
+      elements.current.set(index, internalRef);
 
       return {
         ...rest,
         ref: composeRefs(userRef, internalRef),
-        onKeyDown: <T extends HTMLElement>(e: React.KeyboardEvent<T>) => {
+        onKeyDown: (e) => {
           if (e.isDefaultPrevented()) {
             return;
           }
