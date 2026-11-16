@@ -52,7 +52,6 @@ export const useKeydownEnter = <T extends HTMLElement>({ isEnable }: UseKeydownE
       const { index, ref: userRef, onKeyDown: userOnKeyDown, ...rest } = userProps;
 
       if (elements.current.has(index)) {
-        console.warn(`[useKeydownEnter] elements index:${index} duplicate.`);
         elements.current.delete(index);
       }
       const internalRef = createRef<T>();
